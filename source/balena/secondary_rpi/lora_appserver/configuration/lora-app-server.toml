@@ -1,0 +1,18 @@
+# See https://www.loraserver.io/lora-app-server/install/config/ for a full
+# configuration example and documentation.
+
+[postgresql]
+dsn="postgres://loraserver_as:loraserver_as@150.140.184.249:5432/loraserver_as?sslmode=disable"
+[redis]
+url="redis://150.140.184.249:6379"
+[application_server.integration.mqtt]
+server="tcp://150.140.184.249:1883"
+
+[application_server.api]
+bind="0.0.0.0:8001"
+public_host="150.140.184.241:8001"
+
+[application_server.external_api]
+bind="0.0.0.0:8080"
+jwt_secret = "fKAqUIG14GxzwlKNE3pbG7fvmkwJymGLzV5LyvOTP3g="
+

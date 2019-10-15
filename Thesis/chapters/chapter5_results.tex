@@ -1,0 +1,12 @@
+\chapter{Results} \label{ch:results}
+\markboth{Results}{}
+
+The implementation showcases a successful handover of sensors by means of transferring the device-service container from one failed Edge to the next one in range. We have successfully created a stateless service that will perform the exact same functionality without requiring to sustain a specific state, as long as the environment provides the necessary infrastructure for the service to interface.
+
+Moreover, we have combined an array of different and innovative technologies to construct the architecture on a new field with little relevant research. We feel that the combination of docker technology in the form of balenaOS and Filecoin as a decentralized storage for image containers can create a new interesting approach towards a network of IoT Edge computers.   
+
+With the current implementation, two Edge devices that have the exact same structure as described in Implementation Chapter \ref{ch:implementation}, when manually activated, will enter into a digital contract and transfer services over Filecoin from the service customer to the service provider. The service provider monitors the service customer’s activity and in case it detects that it is offline, it starts the containers as indicated in the contract and the configuration file.
+
+Thus, the implementation successfully showcases the rent of resources from one Edge (service provider) device to another (service customer) by means of running containers sent by the service customers on the service provider’s device which will retain it’s normal functionality for all the duration of this process.
+
+Finally, during the development of the implementation, we actively participated in the online communities of the open source projects that we used, making contributions in the process. These contributions belong mainly to the field of documentation and functionality improvements, we also showcased how different platforms can be integrated together, namely Balena and EdgeX\cite{edgexbalenaodys}. Our work with EdgeX resulted in an invitation to Architect's day of the EdgeX conference, where the future of the project and architectural matters are discussed. We are extremely glad for contributing to these projects and we hope that this thesis will serve as stepping stone for others, both from the development and academic communities.

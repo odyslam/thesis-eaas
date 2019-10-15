@@ -1,0 +1,22 @@
+# Copyright 2017 Dell Inc. All rights reserved.
+name: "id459543-lora-device_service_profile2"
+manufacturer: "Odysseas"
+model: "1"
+labels: 
+    - "lora"
+description: "generic lora device"
+coreCommands: 
+  - 
+    name:  get_last_reading
+    get: 
+        path: "/device/{deviceId}/last_reading"
+        responses:
+          - 
+            code: "200"
+            description: "Last reading from lora device"
+            expectedValues: ["lora-device-data"]
+          -
+            code: "503"
+            description: "service unavailable"
+            expectedValues: ["error_exists"]
+    

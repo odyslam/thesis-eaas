@@ -1,0 +1,30 @@
+{
+    "name": "node-red_edgy-device-service",
+    "version": "0.0.1",
+    "description": "A node-red service that functions as a RESTful glue between EdgeX and lora-app-server",
+    "homepage": "http://www.google.gr",
+    "license": "Apache-2.0",
+    "repository": {
+        "type": "git",
+        "url": ""
+    },
+    "main": "node_modules/node-red/red/red.js",
+    "scripts": {
+        "start": "node --max-old-space-size=128 node_modules/node-red/red.js "
+    },
+    "contributors": [
+        {
+            "name": "Odysseas Lamtzidis"
+        }
+    ],
+    "dependencies": {
+        "node-red": "0.20.7",
+        "node-red-node-msgpack": "*",
+        "node-red-node-base64": "*",
+        "node-red-node-suncalc": "*",
+        "node-red-node-random": "*"
+    },
+    "engines": {
+        "node": "8.*.*"
+    }
+}

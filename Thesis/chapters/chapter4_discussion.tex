@@ -1,0 +1,31 @@
+\chapter{Discussion} \label{ch:discussion}
+\markboth{Discussion}{}
+
+There are several assumptions and simplifications that are made in this thesis, especially in implementation Chapter \ref{ch:implementation}. Although we believe that they are outside of the scope of this thesis, we believe it’s important to reiterate them so as the reader is lead to a solid conclusion and better grasp of our vision for any future steps.
+
+The first and foremost need is to verify the problematic and find the appropriate business use-case. Business, in the sense that our proposed architecture can solve a real world problem and provide value to the user. Preliminary research has indicated that, indeed, there is such a need, taking into account the growing number of IoT devices and the need for efficient and low-latency processing and decision-making in a scalable manner, we still believe that discussion with key industry leaders can lead to more specific results and use cases.
+
+Moreover, the defined architecture is still under research whether it is the appropriate means for our end goal. It is true that the container technology has found a unique balance between complete isolation and computational overhead, enabling us to implement it even in the most weak computational systems, like the  Raspberry pi micro-computer. But, it remains to be seem whether it will be usable between hostOs and containers that may belong to different stakeholders, possibly without trust.
+
+The final system was designed as a proof of concept and implemented/tested inside a lab environment. However, towards a more business-oriented implementation, a complete assessment is required not only for the security of the overall system but also for its individual components. We understand that there are important security implications regarding the use of containers in a multi-tenancy scenario with possible hostile HostOs and/or hostile containers, but we envisage to perform such an analysis before continuing with further development.
+
+Finally, the services mentioned in the implementation Chapter \ref{ch:implementation} were developed as a proof of concept and thus they do not conform to production-ready standards, such as PEP syntax style or programming paradigms such as parallel programming. The reader is advised to re-implement the services for replication purposes, using our implementation as a reference point for functionality.
+
+
+\section{Assumptions}
+
+Assumptions were also made in the implementation to be able to narrow the broad spectrum of this thesis.
+
+The loraserver.io infrastructure was divided into a part that is assumed to exist in any LoRa capable Edge device and a part that realises the application logic, this has certain implications:
+
+\begin{enumerate}
+    \item Security wise our assumption was correct as the application server is the sole capable of decrypting the LoRa payload (due to the application network key). 
+    \item In the implemented architecture, the application server should have it’s own dedicated and isolated databases but we opted to use the lorank loraserver’s for efficiency. This is security-wise wrong, as the owner of the databases is the IoT Edge of the service provider and thus he would have access to possibly sensitive information.
+    \item Filecoin is still in early alpha, offering no stable release as of the moment of writing (21/9). This means that the implementation, could break with any new release and while it is acceptable for a proof of concept, we can’t expect to build a prototype with Filecoin as a critical component.
+    \item The use of Filecoin is to enhance the autonomy of the IoT Edge, as the Edge has direct access to the Storage Layer. Although using the backend Filecoin Interface, we render our argument moot, for the same reasons as in 3), we feel that it is an acceptable assumption.
+    \item The developed scripts do not adhere to programming best practices (such as syntax specifications) and where made with development speed at mind. They will be done re-programming from the ground up for a prototype to emerge.
+\end{enumerate}
+
+We believe that it is correct to assume that only the application layer of the LoRa infrastructure will need to be sent from the service customer to the service provider. This is because, in order for the service provider to be able to support the management of LoRa devices, it is not only necessary to have all the required hardware as also have an implementation of the packet forwarder. Moreover, it is assumed that the service providers and customers will use the same LoRawan infrastructure, namely the suite offered by loraserver.io. Thus, we believe it’s logical to assume that the contract between the Edges will dictate the interfacing of the service customer's services on the pre-existing infrastructure.
+
+By underlining these simplifications and assumptions ,we believe that the reader will be able to better visualise our implementation goals and whether there is a need for further research and development regarding our project and approach. Future steps that we feel are important to showcase, are presented in Chapter \ref{ch:future-work}.

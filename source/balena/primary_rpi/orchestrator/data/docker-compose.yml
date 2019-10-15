@@ -1,0 +1,255 @@
+
+version: '2.1'
+volumes:
+  db-data:
+  log-data:
+  consul-config:
+  consul-data:
+  lora-app-server: # lora server
+  postgresqldata:
+  lora-redis-data:
+  node-red-data:
+  orchestrator-data:
+  # portainer_data:
+
+services:
+  volume:
+    image: edgexfoundry/docker-edgex-volume-arm64:1.0.0
+    volumes:
+      - db-data:/data
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+      
+  edgex-core-consul:
+    image: consul:1.3.1
+    ports:
+      - "8400:8400"
+      - "8500:8500"
+      - "8600:8600"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - volume  
+
+  edgex-core-config-seed:
+    image: edgexfoundry/docker-core-config-seed-go-arm64:1.0.0
+    command: ["--profile=docker", "--cmd=/edgex/cmd-redis"]
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - volume
+      - edgex-core-consul 
+
+  edgex-redis:
+    build: ./redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - db-data:/data
+    depends_on:
+      - volume
+      
+  # edgex-redis:
+  #   image: redis:5.0.5-alpine
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - db-data:/data
+  #   depends_on:
+  #     - volume
+
+  edgex-support-logging:
+    image: edgexfoundry/docker-support-logging-go-arm64:1.0.1
+    ports:
+      - "48061:48061"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - edgex-core-config-seed
+      - volume
+
+  # edgex-support-notifications:
+  #   image: edgexfoundry/docker-support-notifications-go-arm64:1.0.1
+  #   ports:
+  #     - "48060:48060" 
+  #   volumes:
+  #     # - db-data:/data/db
+  #     - log-data:/edgex/logs
+  #     - consul-config:/consul/config
+  #     - consul-data:/consul/data
+  #   depends_on:
+  #     - edgex-support-logging
+  #     - edgex-redis
+
+  edgex-core-metadata:
+    image: edgexfoundry/docker-core-metadata-go-arm64:1.0.1
+    ports:
+      - "48081:48081"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - edgex-support-logging
+      - edgex-redis
+
+  edgex-core-data:
+    image: edgexfoundry/docker-core-data-go-arm64:1.0.1
+    ports:
+      - "48080:48080"
+      - "5563:5563"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - edgex-core-metadata
+
+  edgex-core-command:
+    image: edgexfoundry/docker-core-command-go-arm64:1.0.1
+    ports:
+      - "48082:48082"
+
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    # depends_on:
+    #   - edgex-support-notifications
+
+  edgex-export-client:
+    image: edgexfoundry/docker-export-client-go-arm64:1.0.1
+    ports:
+      - "48071:48071"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - edgex-core-data
+    # environment:
+    #   - EXPORT_CLIENT_MONGO_URL=edgex-mongo
+    #   - EXPORT_CLIENT_DISTRO_HOST=export-distro
+    #   - EXPORT_CLIENT_CONSUL_HOST=edgex-config-seed
+  edgex-export-distro:
+    image: edgexfoundry/docker-export-distro-go-arm64:1.0.1
+    ports:
+      - "48070:48070"
+      - "5566:5566"
+    volumes:
+      # - db-data:/data/db
+      - log-data:/edgex/logs
+      - consul-config:/consul/config
+      - consul-data:/consul/data
+    depends_on:
+      - edgex-export-client
+    environment:
+      - EXPORT_DISTRO_CLIENT_HOST=export-client
+      - EXPORT_DISTRO_DATA_HOST=edgex-core-data
+      - EXPORT_DISTRO_CONSUL_HOST=edgex-config-seed
+      - EXPORT_DISTRO_MQTTS_CERT_FILE=none
+      - EXPORT_DISTRO_MQTTS_KEY_FILE=none
+
+
+# ###### LORA SERVER ####################
+#   lora-appserver:
+#     build: ./lora_appserver
+#     ports:
+#       - 8080:8080
+#       - 8001:8001
+#     # depends_on:
+#     #   - lora-redis
+#     #   - lora-postgresql
+# #################################################################
+# ###### NODE-RED ####################
+
+#   nodered-device-service:
+#     build: ./nodered
+#     ports:
+#         - 1880:1880
+#     volumes:
+#     - node-red-data:/data
+#     depends_on:
+#       - lora-appserver
+#       - edgex-core-command
+#       - edgex-core-metadata
+#       - edgex-core-data
+#       - edgex-core-consul
+#       - orchestrator
+# #################################################################
+  # lora-redis:
+  #   image: redis:4-alpine
+  #   volumes: 
+  #     - lora-redis-data:/data
+      
+  # lora-postgresql:
+  #   build: ./postgresql
+  #   volumes:
+  #     - postgresqldata:/var/lib/postgresql/data
+  #   ports: 
+  #     - 5432:5432
+  #   depends_on:
+  #     - volume
+  #     - edgex-core-data
+  #     - edgex-core-metadata
+
+  #     - edgex-core-consul
+
+###### Orchestrator ####################
+  orchestrator:
+    build: ./orchestrator
+    ports: 
+      - 80:80
+    volumes:
+      - orchestrator-data:/usr/src/app/data
+    labels:
+      io.balena.features.balena-api: '1'
+      io.balena.features.balena-socket: '1'
+
+
+
+
+# Device Services
+#################################################################
+
+  # edgex-device-virtual:
+  #   image: edgexfoundry/docker-device-virtual-arm64:0.5.0
+
+  #   ports:
+  #     - "49990:49990"
+  #   volumes:
+  #     # - db-data:/data/db
+  #     - log-data:/edgex/logs
+  #     - consul-config:/consul/config
+  #     - consul-data:/consul/data
+  #   depends_on:
+  #     - edgex-core-data
+  #     - edgex-core-command
+
+  # device-virtual:
+  #   image: edgexfoundry/docker-device-virtual-go-arm64:1.0.0
+  #   ports:
+  #     - "49990:49990"
+  #   volumes:
+  #    - db-data:/data/db
+  #    - log-data:/edgex/logs
+  #    - consul-config:/consul/config
+  #    - consul-data:/consul/data
+  #   depends_on:
+  #     - edgex-core-data
+  #     - edgex-core-command
+...

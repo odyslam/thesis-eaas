@@ -1,0 +1,13 @@
+{
+    "service_customer_id":"EdgeX-64",
+    "serviceName": "nodered-device-service",
+    "activationEvent": "offline",
+    "event":{
+        "interval": "20",
+        "ip":"https://f223871f69c8b68a509868943f84bf7b.balena-devices.com/"
+    },
+    "ports": "1880",
+    "volumes": "node-red-data:/data",
+    "depends_on":["lora-appserver","edgex-core-command", "edgex-core-data","edgex-core-consul","orchestrator"],
+    "miner_address": "t1hieq4dc3y3tlptg3xy2nb4ruczlomcixak2we4a"
+}

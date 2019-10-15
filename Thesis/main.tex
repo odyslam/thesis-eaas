@@ -1,0 +1,159 @@
+\documentclass[a4paper,12pt,twoside]{book}
+\usepackage{upatras-thesis}
+
+% PDF settings
+%
+% \hypersetup
+% {
+%     pdfauthor={\me},
+%     pdftitle={\shortdoctitle},
+%     pdfsubject={\doctitle},
+%     pdfkeywords={\keywords},
+%     pdfproducer={pdfLaTeX},
+%     pdfcreator={\creator}
+% }
+
+%
+% These commands need to be defined in order to produce a correct and personalized document
+%
+\newcommand{\shortdoctitle}{Thesis}
+\newcommand{\doctitle}{An IoT Edge-as-a-service (Eaas) Distributed Architecture \& Reference Implementation}
+% \newcommand{\docsubtitle}{Υπότιτλος εγγράφου}
+\newcommand{\division}{Electronics and Computers Department}
+\newcommand{\lab}{Network Architectures \& Management group, Applied Electronics Laboratory}
+
+\newcommand{\me}{Odysseas Lamtzidis of George-Patroklos} %(σε γενική πτώση) ΠΡΟΣΟΧΗ: στοιχεία σε γενική πτώση. Παράδειγμα: Άγγελου Σικελιανού του Ιωάννη
+%
+\newcommand{\nomme}{Odysseas Lamtzidis of George-Patroklos} %(σε ονομαστική πτώση) ΠΡΟΣΟΧΗ: στοιχεία σε ονομαστική πτώση. Παράδειγμα: Άγγελος Σικελιανός του Ιωάννη
+%
+\newcommand{\studnum}{1019749}
+\newcommand{\keywords}{Internet of Things; Blockchain; Edge computing; ;implementation; Sharing Economy}
+\newcommand{\monthyear}{September 2019}
+
+\newcommand{\supname}{Dr. John Gialelis}
+\newcommand{\suptitle}{EDiP}
+\newcommand{\supuni}{University of Patras}
+
+\newcommand{\cosupname}{Spyros Denazis}
+\newcommand{\cosuptitle}{Associate Professor}
+\newcommand{\cosupuni}{University of Patras}
+
+\newcommand{\headofdivision}{Vasileios Paliouras}
+\newcommand{\headofdivisiontitle}{Associate Professor}
+
+\author{\me}
+
+% GLOSSARY
+
+\makeglossaries
+\setlength{\glsdescwidth}{0.7\hsize}
+\setlength{\headheight}{15pt}
+\input{library/glossary}
+% BEGIN DOCUMENT
+\begin{document}
+
+% SET PAGE NUMBERING TO ROMAN
+\pagenumbering{roman}
+\setcounter{page}{3}
+
+%*************************%
+%         TITLES          %
+%*************************%
+
+\include{intro/titlepage}
+\clearemptydoublepage
+
+\include{intro/certification-gr}
+\clearemptydoublepage
+
+\include{intro/certification-en}
+\clearemptydoublepage
+
+\include{intro/about}
+\clearemptydoublepage
+
+\include{intro/summary}
+\clearemptydoublepage
+
+\include{intro/acknowledgements}
+\clearemptydoublepage
+
+\pagestyle{empty}
+
+{\hypersetup{linkcolor=black}
+\tableofcontents
+}
+\clearemptydoublepage
+
+%*************************%
+%    1. Lists of figures  %
+%    2. List of Tables    %
+%    3. Glossary          %
+%*************************%
+% \listoffigures
+% \listoftables
+% \printglossaries
+% \clearemptydoublepage
+
+{\hypersetup{linkcolor=black}
+\listoffigures
+\listoftables
+}
+\glsaddall
+\printglossary[style = mylong]
+\printglossary[type=acronym,style=custom_acronyms]
+\clearemptydoublepage
+% \gamo_ton_xristo_sou_glossary
+% easter_egg
+
+\mainmatter % book mode only
+\clearemptydoublepage
+
+
+\pagestyle{fancy}
+\pagenumbering{arabic}
+\setcounter{page}{1}
+
+%*************************%
+%       Main Chapters     %
+%*************************%
+
+% Introduction
+\input{chapters/introduction}
+\clearemptydoublepage
+
+% Chapter 1
+ \input{chapters/chapter1_problemstatement.tex}
+ \clearemptydoublepage
+ 
+ \input{chapters/chapter2_architecture.tex}
+ \clearemptydoublepage
+ 
+  \input{chapters/chapter3_implementation.tex}
+ \clearemptydoublepage
+ 
+ \input{chapters/chapter4_discussion.tex}
+ \clearemptydoublepage
+ 
+ \input{chapters/chapter5_results.tex}
+ \clearemptydoublepage
+ 
+ \input{chapters/chapter6_future_work.tex}
+ \clearemptydoublepage
+
+% Next Chapters
+% .............
+% .............
+
+%**************************%
+%    END OF MAIN THESIS    %
+%**************************%
+
+% bibliography
+\bibliographystyle{unsrt}
+\bibliography{library/bibliography.bib}
+\clearemptydoublepage
+
+% Last Page
+\input{intro/lastpage}
+\end{document}

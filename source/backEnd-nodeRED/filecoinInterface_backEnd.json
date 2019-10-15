@@ -1,0 +1,860 @@
+[
+    {
+        "id": "ef575f5d.fa8e2",
+        "type": "tab",
+        "label": "Filecoin working",
+        "disabled": true,
+        "info": ""
+    },
+    {
+        "id": "a0d5b15f.d5a57",
+        "type": "tab",
+        "label": "Filecoin mockup",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "80f0423c.0c996",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "get_data",
+        "func": "let data = msg.payload.data;\nlet secret = msg.payload.secret\n\n\n// imagesHashes = global.get(\"imageHashes\");\n\nif (secret == \"super_secret\"){\n    msg.imageHash = data.imageHash;\n    msg.imageName = data.imageName;\n    msg.minerAddress = data.minerAddress;\n    msg.ip = data.ipAddress;\n}\nif (msg.imageHash === undefined || msg.imageName === undefined || msg.imageName === undefined){\n        msg.statusCode = 500;\n        return [null, msg];\n        \n    }\nflow.set(\"edgeIpAddress_request\", data.ipAddress);\nflow.set(\"edgeId\", msg.payload.id)\nmsg.payload = \"data OK\"\n\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "6421d412.536a6c",
+                "438be8e.79a8718"
+            ],
+            [
+                "d37d3db2.5c6d"
+            ]
+        ]
+    },
+    {
+        "id": "6421d412.536a6c",
+        "type": "http response",
+        "z": "ef575f5d.fa8e2",
+        "name": "200",
+        "statusCode": "200",
+        "headers": {},
+        "x": 510,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "5527e78f.46a4e8",
+        "type": "exec",
+        "z": "ef575f5d.fa8e2",
+        "command": "go-filecoin retrieval-client retrieve-piece",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 600,
+        "y": 60,
+        "wires": [
+            [
+                "c8cd9a46.bcb038"
+            ],
+            [
+                "5a405aa2.444304"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "187b033f.baa25d",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "store_image",
+        "func": "let data = msg.payload.data;\nlet secret = msg.payload.secret;\n\nif (secret == \"super_secret\"){\n    msg.imageName = data.imageName;\n    msg.duration = parseInt(data.duration) * 2880; // duration in days, 1 day = 2880 blocks (1 block/30sec)\n    if (msg.duration === undefined || msg.imageName === undefined){\n        msg.statusCode = 500;\n        return [null, msg];\n        \n    }\n    flow.set(\"edgeIpAddress_store\", data.ipAddress);\n    flow.set(\"edgeId\", msg.payload.edgeId)\n\n\n    \n}\nelse{\n    node.warn(\"Wrong secret: \"+ data.secret);\n    return [null, msg];\n}\n\nmsg.payload = \"data OK\";\n\nreturn [msg, null];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 110,
+        "y": 560,
+        "wires": [
+            [
+                "128a3f7.e6d16c1"
+            ],
+            [
+                "cf94753a.05dc78"
+            ]
+        ]
+    },
+    {
+        "id": "d28c9ec.6460a6",
+        "type": "exec",
+        "z": "ef575f5d.fa8e2",
+        "command": "export",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 510,
+        "y": 560,
+        "wires": [
+            [
+                "4bebb3eb.9167ac"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "66e2a516.dbed5c",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "set propose deal",
+        "func": "msg.askId = msg.payload;\nmsg.paylad = global.get(\"minerId\") + \" \" + msg.cid + \" \" + msg.askId + \" \" + msg.duration.toString();\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1190,
+        "y": 560,
+        "wires": [
+            [
+                "69153ace.0c4964"
+            ]
+        ]
+    },
+    {
+        "id": "c8cd9a46.bcb038",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "set image_request/image_exists",
+        "func": "\n\n\n\n\n\n\n\n\n\n\n\n// if (msg.payload != \"\"){\n// msg.url = flow.get(\"edgeIpAddress_request\") + flow.get(\"port\") + \"/filecoin_interface/backend/ready2download_image\"\n// if (msg.payload == \"image does not exist\"){\n//     msg.payload = {\n//         \"imageExists\": false,\n//         \"imageName\":msg.imageName,\n//         \"imageHash\":msg.imageHash\n//         };\n// }\n// else if (msg.payload == \"image exists\"){\n//     msg.payload = {\n//         \"imageExists\": true,\n//         \"imageName\":msg.imageName,\n//         \"imageHash\":msg.imageHash\n//         };\n// }\n// }\n// else{\n//     return null\n// }\n// return msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 950,
+        "y": 50,
+        "wires": [
+            [
+                "d4136fec.02693"
+            ]
+        ]
+    },
+    {
+        "id": "13dde98e.68d956",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "set_command_payload",
+        "func": "msg.payload = \" \" + msg.minerAddress + \" \" + msg.imageHash\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 230,
+        "y": 60,
+        "wires": [
+            [
+                "5527e78f.46a4e8"
+            ]
+        ]
+    },
+    {
+        "id": "795a38c2.962a18",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "set CID",
+        "func": "msg.payload = \"CID=`go-filecoin client import /home/ubuntu/filecoin_images/\" + msg.imageName  + \"` && echo $CID\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 360,
+        "y": 560,
+        "wires": [
+            [
+                "d28c9ec.6460a6"
+            ]
+        ]
+    },
+    {
+        "id": "128a3f7.e6d16c1",
+        "type": "http response",
+        "z": "ef575f5d.fa8e2",
+        "name": "200",
+        "statusCode": "",
+        "headers": {},
+        "x": 370,
+        "y": 510,
+        "wires": []
+    },
+    {
+        "id": "69153ace.0c4964",
+        "type": "exec",
+        "z": "ef575f5d.fa8e2",
+        "command": "go-filecoin client propose-storage-deal",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 620,
+        "y": 650,
+        "wires": [
+            [
+                "63b79e50.0bd61"
+            ],
+            [
+                "e1fc5b59.690d78"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cf94753a.05dc78",
+        "type": "http response",
+        "z": "ef575f5d.fa8e2",
+        "name": "500",
+        "statusCode": "",
+        "headers": {},
+        "x": 350,
+        "y": 620,
+        "wires": []
+    },
+    {
+        "id": "4bebb3eb.9167ac",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "get ask id",
+        "func": "msg.cid = msg.payload;\nmsg.minerId = global.get(\"minerId\")\nmsg.payload = \"--enc=json | jq 'select(.Miner==\" + msg.minerId + \") | .ID' | sed 1q\" ;\n\nnode.warn(msg.payload)\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 560,
+        "wires": [
+            [
+                "5a280820.ed62d8"
+            ]
+        ]
+    },
+    {
+        "id": "5a280820.ed62d8",
+        "type": "exec",
+        "z": "ef575f5d.fa8e2",
+        "command": "go-filecoin client list-asks",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 910,
+        "y": 560,
+        "wires": [
+            [
+                "66e2a516.dbed5c"
+            ],
+            [
+                "e1fc5b59.690d78"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "63b79e50.0bd61",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "set store_image/file_accepted",
+        "func": "msg.url = flow.get(\"edgeIpAddress_store\") + flow.get(\"port\") + \"/filecoin_interface/backend/store_image\"\nlet output = msg.payload\n\n\n// status accepted, stored, \nmsg.payload = {\n    \"status\": status,\n    \"imageName\":msg.imageName,\n    \"imageHash\":msg.imageHash\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 960,
+        "y": 650,
+        "wires": [
+            [
+                "8e1b7c52.da631"
+            ]
+        ]
+    },
+    {
+        "id": "5a405aa2.444304",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "Error Handling",
+        "func": "let error = msg.payload;\nlet return_object = msg.rc;\nip = flow.get(\"edgeIpAddress_request\")\nmsg.url = ip + \"/filecoin_interface/backend/error\";\n\nmsg.payload = { \n        \"errorObject\": return_object\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 900,
+        "y": 100,
+        "wires": [
+            [
+                "e916b318.bef44",
+                "bfa695d7.aea8a8"
+            ]
+        ]
+    },
+    {
+        "id": "e916b318.bef44",
+        "type": "debug",
+        "z": "ef575f5d.fa8e2",
+        "name": "error code",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1230,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "d4136fec.02693",
+        "type": "http request",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 1280,
+        "y": 50,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e1b7c52.da631",
+        "type": "http request",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 1330,
+        "y": 650,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d37d3db2.5c6d",
+        "type": "http response",
+        "z": "ef575f5d.fa8e2",
+        "name": "500",
+        "statusCode": "",
+        "headers": {},
+        "x": 510,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "4a1dfa87.6e3634",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "func": "\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 150,
+        "y": 780,
+        "wires": [
+            [
+                "d9a16eb4.bd283"
+            ]
+        ]
+    },
+    {
+        "id": "d9a16eb4.bd283",
+        "type": "exec",
+        "z": "ef575f5d.fa8e2",
+        "command": "go-filecoin client query-storage-deal",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 390,
+        "y": 780,
+        "wires": [
+            [
+                "419ed855.5bf358"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "419ed855.5bf358",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "func": "msg.url = flow.get(\"edgeIpAddress_store\") + flow.get(\"port\") + \"/filecoin_interface/backend/store_image\"\nlet output = msg.payload\nif (output ==\" \"){\n// status accepted, stored, \n    msg.payload = {\n        \"status\": \"stored\",\n        \"imageName\":msg.imageName,\n        \"imageHash\":msg.imageHash\n    }\n}\nelse if (output == \"\"){\n    msg = null;\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 780,
+        "wires": [
+            [
+                "d44f9e9d.00404"
+            ]
+        ]
+    },
+    {
+        "id": "d44f9e9d.00404",
+        "type": "http request",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 790,
+        "y": 780,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bfa695d7.aea8a8",
+        "type": "http request",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 1230,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e1fc5b59.690d78",
+        "type": "function",
+        "z": "ef575f5d.fa8e2",
+        "name": "Error Handling",
+        "func": "let error = msg.payload;\nlet return_object = msg.rc;\nip = flow.get(\"edgeIpAddress_request\")\nmsg.url = ip + \"/filecoin_interface/backend/error\";\n\nmsg.payload = { \n        \"errorObject\": return_object\n};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 980,
+        "y": 490,
+        "wires": [
+            [
+                "e991b1d3.74cc9",
+                "a5adce9f.fc7c1"
+            ]
+        ]
+    },
+    {
+        "id": "438be8e.79a8718",
+        "type": "debug",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 460,
+        "y": 200,
+        "wires": []
+    },
+    {
+        "id": "e991b1d3.74cc9",
+        "type": "debug",
+        "z": "ef575f5d.fa8e2",
+        "name": "error code",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "payload",
+        "targetType": "msg",
+        "x": 1200,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "a5adce9f.fc7c1",
+        "type": "http request",
+        "z": "ef575f5d.fa8e2",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 1200,
+        "y": 500,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "937e7f22.40724",
+        "type": "http in",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "url": "get_image",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 110,
+        "y": 90,
+        "wires": [
+            [
+                "a0e4def2.07607",
+                "dba761e0.151a5"
+            ]
+        ]
+    },
+    {
+        "id": "a0e4def2.07607",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "func": "let data = msg.payload.data;\nlet secret = msg.payload.secret\n\n\n// imagesHashes = global.get(\"imageHashes\");\n\nif (secret == \"super_secret\"){\n    msg.imageHash = data.imageHash;\n    msg.imageName = data.imageName;\n    msg.minerAddress = data.minerAddress;\n    msg.ip = data.ipAddress;\n}\nif (msg.imageHash === undefined || msg.imageName === undefined || msg.imageName === undefined){\n        msg.statusCode = 500;\n        return [null, msg];\n        \n    }\nflow.set(\"edgeIpAddress_request\", data.ipAddress);\nflow.set(\"edgeId\", msg.payload.id)\nmsg.payload = \"data OK\"\n\n\nreturn [msg, null];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 320,
+        "y": 120,
+        "wires": [
+            [
+                "1e4b465.fa33eba",
+                "79291a70.2cb604"
+            ],
+            [
+                "969fd0c6.4a861"
+            ]
+        ]
+    },
+    {
+        "id": "1e4b465.fa33eba",
+        "type": "delay",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 500,
+        "y": 120,
+        "wires": [
+            [
+                "3606872e.d773e8"
+            ]
+        ]
+    },
+    {
+        "id": "3606872e.d773e8",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "func": "msg.payload = {\n    \"imageName\": msg.imageName,\n    \"imageHash\": msg.imageHash,\n    \"imageStatus\":\"ready2download\",\n    \"miner_address\": msg.minerAddress\n};\n\nmsg.url = msg.ip + \"filecoin_interface/backend/image\";\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 760,
+        "y": 130,
+        "wires": [
+            [
+                "67cc64a0.f4cbbc",
+                "8affa90e.14bc38"
+            ]
+        ]
+    },
+    {
+        "id": "67cc64a0.f4cbbc",
+        "type": "http request",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 990,
+        "y": 130,
+        "wires": [
+            [
+                "6cc66a7a.ac7ba4"
+            ]
+        ]
+    },
+    {
+        "id": "6cc66a7a.ac7ba4",
+        "type": "debug",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1190,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "fdc3a0a.9c8656",
+        "type": "http in",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "url": "store_image",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 120,
+        "y": 180,
+        "wires": [
+            [
+                "b1e209a6.3eeea8",
+                "dba761e0.151a5"
+            ]
+        ]
+    },
+    {
+        "id": "b1e209a6.3eeea8",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "func": "let data = msg.payload.data;\nlet secret = msg.payload.secret\n\n\n// imagesHashes = global.get(\"imageHashes\");\n\nif (secret == \"super_secret\"){\n    msg.imageName = data.imageName;\n    msg.minerAddress = data.minerAddress;\n    msg.ip = data.ipAddress;\n    msg.duration = data.duration;\n}\nif ( msg.imageName === undefined || msg.duration === undefined){\n        msg.statusCode = 500;\n        return [null, msg];\n        \n    }\nflow.set(\"edgeIpAddress_request\", data.ipAddress);\nflow.set(\"edgeId\", msg.payload.id)\nmsg.payload = \"data OK\"\n\n\nreturn [msg, null];\n",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 320,
+        "y": 210,
+        "wires": [
+            [
+                "79291a70.2cb604",
+                "de51ac97.ffa6"
+            ],
+            [
+                "969fd0c6.4a861"
+            ]
+        ]
+    },
+    {
+        "id": "9c4c7cb4.cda3d",
+        "type": "http request",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "method": "POST",
+        "ret": "txt",
+        "paytoqs": false,
+        "url": "",
+        "tls": "",
+        "proxy": "",
+        "authType": "",
+        "x": 1150,
+        "y": 350,
+        "wires": [
+            [
+                "1078dc93.77f803"
+            ]
+        ]
+    },
+    {
+        "id": "1078dc93.77f803",
+        "type": "debug",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1300,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "ece33145.85854",
+        "type": "exec",
+        "z": "a0d5b15f.d5a57",
+        "command": "export",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "false",
+        "timer": "",
+        "oldrc": false,
+        "name": "",
+        "x": 640,
+        "y": 240,
+        "wires": [
+            [
+                "8a43bd6b.19fb5"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "de51ac97.ffa6",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "set CID",
+        "func": "msg.payload = \"CID=`go-filecoin client import /home/ubuntu/filecoin_images/\" + msg.imageName  + \"` && echo $CID\"\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 490,
+        "y": 220,
+        "wires": [
+            [
+                "ece33145.85854"
+            ]
+        ]
+    },
+    {
+        "id": "8a43bd6b.19fb5",
+        "type": "delay",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "10",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 790,
+        "y": 230,
+        "wires": [
+            [
+                "a2f43d77.26326",
+                "d723124c.b6629"
+            ]
+        ]
+    },
+    {
+        "id": "a2f43d77.26326",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "set committed",
+        "func": "msg.cid = msg.payload;\nmsg.payload = {\n    \"imageName\":msg.imageName,\n    \"imageHash\": msg.cid.toString(),\n    \"miner_address\": msg.minerAddress,\n    \"imageStatus\": \"committed\"\n}\nmsg.url = msg.ip + \"filecoin_interface/backend/image\"\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1010,
+        "y": 230,
+        "wires": [
+            [
+                "9c4c7cb4.cda3d",
+                "8affa90e.14bc38"
+            ]
+        ]
+    },
+    {
+        "id": "79291a70.2cb604",
+        "type": "http response",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "statusCode": "200",
+        "headers": {},
+        "x": 450,
+        "y": 350,
+        "wires": []
+    },
+    {
+        "id": "969fd0c6.4a861",
+        "type": "http response",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "statusCode": "500",
+        "headers": {},
+        "x": 450,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "d723124c.b6629",
+        "type": "delay",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "50",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "x": 760,
+        "y": 390,
+        "wires": [
+            [
+                "ad85aaac.488028"
+            ]
+        ]
+    },
+    {
+        "id": "ad85aaac.488028",
+        "type": "function",
+        "z": "a0d5b15f.d5a57",
+        "name": "set stored",
+        "func": "msg.cid = msg.payload;\nmsg.payload = {\n    \"imageName\":msg.imageName,\n    \"imageHash\": msg.cid.toString(),\n    \"miner_address\": msg.minerAddress,\n    \"imageStatus\": \"stored\"\n}\nmsg.url = msg.ip + \"filecoin_interface/backend/image\"\n\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 930,
+        "y": 390,
+        "wires": [
+            [
+                "9c4c7cb4.cda3d",
+                "8affa90e.14bc38"
+            ]
+        ]
+    },
+    {
+        "id": "dba761e0.151a5",
+        "type": "debug",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 170,
+        "y": 370,
+        "wires": []
+    },
+    {
+        "id": "8affa90e.14bc38",
+        "type": "debug",
+        "z": "a0d5b15f.d5a57",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "x": 1150,
+        "y": 480,
+        "wires": []
+    }
+]

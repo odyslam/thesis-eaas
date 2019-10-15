@@ -1,0 +1,977 @@
+[{
+    "id": "8d8ba042.3b679",
+    "type": "tab",
+    "label": "Flow 1",
+    "disabled": false,
+    "info": ""
+}, {
+    "id": "ffd362fc.2279d",
+    "type": "tab",
+    "label": "Device Service API Endpoint",
+    "disabled": false,
+    "info": ""
+}, {
+    "id": "1bf1e262.514f2e",
+    "type": "tab",
+    "label": "Device Service Bootstrap",
+    "disabled": false,
+    "info": ""
+}, {
+    "id": "d48a6a61.7ca768",
+    "type": "subflow",
+    "name": "Lora-app-server Bootstrap (2)",
+    "info": "",
+    "category": "",
+    "in": [{
+        "x": 60,
+        "y": 80,
+        "wires": [{
+            "id": "f340ab43.f732a8"
+        }]
+    }],
+    "out": [{
+        "x": 1640,
+        "y": 500,
+        "wires": [{
+            "id": "c4853fb3.dd476",
+            "port": 0
+        }]
+    }],
+    "env": [{
+        "name": "JWT_TOKEN",
+        "type": "str",
+        "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJhdWQiOiJsb3JhLWFwcC1zZXJ2ZXIiLCJuYmYiOjE0ODk1NjY5NTgsImV4cCI6MTYxNDc2NDgwMCwic3ViIjoidXNlciIsInVzZXJuYW1lIjoiYWRtaW4ifQ.Wmuh6cUALWsqUPsKiNPNQBvjGbW7zBCxUKeWc_22GrI"
+    }, {
+        "name": "URL",
+        "type": "str",
+        "value": "lora-appserver:8080"
+    }, {
+        "name": "NETSKEY",
+        "type": "str",
+        "value": "2B7E151628AED2A6ABF7158809CF4F3C"
+    }, {
+        "name": "APPSKEY",
+        "type": "str",
+        "value": "2B7E151628AED2A6ABF7158809CF4F3C"
+    }, {
+        "name": "DEVADDR",
+        "type": "str",
+        "value": "09984507"
+    }, {
+        "name": "GATEWAY_ID",
+        "type": "str",
+        "value": "1dee070daa25c124"
+    }, {
+        "name": "LORANK_IP",
+        "type": "str",
+        "value": "150.140.184.249"
+    }]
+}, {
+    "id": "13db4f3b.be7941",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_application",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 320,
+    "y": 420,
+    "wires": [
+        ["cbb8bd1c.a47a7", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "bee2f944.146398",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_service_profile",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 150,
+    "y": 320,
+    "wires": [
+        ["7437bd89.4df834", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "9447c473.6801a8",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_network_server",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1120,
+    "y": 240,
+    "wires": [
+        ["31b73bc2.975964", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "61cbc697.7c11d8",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_gateway",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1275,
+    "y": 319,
+    "wires": [
+        ["a38eda5c.854ab8"]
+    ]
+}, {
+    "id": "f858441b.b01ff8",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create-HTTP-integration",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1100,
+    "y": 500,
+    "wires": [
+        ["c4853fb3.dd476"]
+    ]
+}, {
+    "id": "cd220aa9.966798",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create-gateway-profile",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 760,
+    "y": 320,
+    "wires": [
+        ["a56466a9.1035f8", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "6d8562b2.90e7ac",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Edgex-register_device_service",
+    "method": "PUT",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1270,
+    "y": 560,
+    "wires": [
+        ["f9c85bba.4e0748"]
+    ]
+}, {
+    "id": "80c23241.4951f",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Edgex-create_device_profile",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 720,
+    "y": 560,
+    "wires": [
+        ["62418863.9eb078"]
+    ]
+}, {
+    "id": "ec070002.9445e",
+    "type": "file in",
+    "z": "1bf1e262.514f2e",
+    "name": "device-service-configuration.yaml",
+    "filename": "",
+    "format": "utf8",
+    "chunk": false,
+    "sendError": false,
+    "encoding": "none",
+    "x": 180,
+    "y": 560,
+    "wires": [
+        ["cbebfcda.9244b"]
+    ]
+}, {
+    "id": "2865ce8a.192f52",
+    "type": "subflow:d48a6a61.7ca768",
+    "z": "1bf1e262.514f2e",
+    "name": "",
+    "env": [],
+    "x": 1540,
+    "y": 720,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "142055a1.71d1ca",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Edgex-create_device_service",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 140,
+    "y": 720,
+    "wires": [
+        ["15534654.464cea"]
+    ]
+}, {
+    "id": "e1d5bfbb.3e9fa",
+    "type": "http in",
+    "z": "ffd362fc.2279d",
+    "name": "EdgeX-health_check",
+    "url": "/ping",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 190,
+    "y": 80,
+    "wires": [
+        ["c72124a1.519ad8"]
+    ]
+}, {
+    "id": "934992cd.e4ba9",
+    "type": "http in",
+    "z": "ffd362fc.2279d",
+    "name": "",
+    "url": "device/:device_id/:command_name",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 260,
+    "y": 160,
+    "wires": [
+        ["c347c074.d6a38"]
+    ]
+}, {
+    "id": "90afd9c4.d6ebd8",
+    "type": "http in",
+    "z": "ffd362fc.2279d",
+    "name": "EdgeX-metadata POST",
+    "url": "/callback",
+    "method": "get",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 200,
+    "y": 300,
+    "wires": [
+        ["91f27be3.4e0018"]
+    ]
+}, {
+    "id": "d4cbc9ae.863b18",
+    "type": "http response",
+    "z": "ffd362fc.2279d",
+    "name": "",
+    "statusCode": "",
+    "headers": {
+        "content-type": "application/json"
+    },
+    "x": 1290,
+    "y": 160,
+    "wires": []
+}, {
+    "id": "1eb7deb6.8921d1",
+    "type": "http response",
+    "z": "ffd362fc.2279d",
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "x": 710,
+    "y": 300,
+    "wires": []
+}, {
+    "id": "a9686ec6.7ed15",
+    "type": "http in",
+    "z": "ffd362fc.2279d",
+    "name": "Lora-uplink",
+    "url": "/lora-uplink",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 170,
+    "y": 420,
+    "wires": [
+        ["a3da72a1.22e27"]
+    ]
+}, {
+    "id": "5ad13bda.c2cf94",
+    "type": "http request",
+    "z": "ffd362fc.2279d",
+    "name": "EdgeX-data-log",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 840,
+    "y": 420,
+    "wires": [
+        ["3dd7fe66.349d12"]
+    ]
+}, {
+    "id": "a3da72a1.22e27",
+    "type": "function",
+    "z": "ffd362fc.2279d",
+    "name": "PUT latest reading to context && schematic-transform",
+    "func": "let now = Date.now();\nlet uplink = msg.payload;\nlet d_name = global.get(\"device_name\") || \"id-459543-lora_device\";\nlet device_eui = uplink.devEUI;\nlet rx_info = uplink.rxInfo[0];\nlet reading_id = uplink.deviceName + \":\" + now.toString();\nlet tx_info = uplink.txInfo;\n\nlet buf = Buffer.from(uplink.data, 'base64');\nlet data = buf.toString();\n\nlet other_info = [uplink.adr, uplink.fCnt, uplink.fPort];\n\nlet edgex_device_id = global.get(\"device_id\") || \"test\";\nlet value_string = JSON.stringify({\n            \"rx_info\":rx_info,\n            \"tx_info\":tx_info, \n            \"data\":data, \n            \"other_info\":other_info\n            });\n\nlet reading = {\n    \"device\": d_name,\n    \"created\": now,\n    \"origin\":now,\n    \"event\":\"reading\",\n    \"readings\":[\n        {\n        \"origin\":now,\n        \"name\": \"lora-device-data\",\n        \"value\": value_string\n        }\n    ]\n};\nflow.set(\"last_reading\", reading);\nmsg.statusCode = 200;\nmsg.payload = reading;\nmsg.url = global.get(\"core-data_url\") + \"event\";\n// catch(error){\n//     msg.payload = error;\n//     msg.statusCode = 500;\n// }\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 500,
+    "y": 420,
+    "wires": [
+        ["5ad13bda.c2cf94"]
+    ]
+}, {
+    "id": "c347c074.d6a38",
+    "type": "function",
+    "z": "ffd362fc.2279d",
+    "name": "GET latest reading from context ",
+    "func": "if (msg.req.params.command_name == \"last_reading\" && msg.req.params.device_id == global.get(\"device_id\")){\n\n    try{\n        var reading = flow.get(\"last_reading\")\n        msg.statusCode = 200;\n    }\n    catch(error){\n        reading = null;\n        msg.statusCode = 500;\n    }\n    msg.payload = {\"lora-device-data\":reading};\n    return [msg, null];\n}\n\nelse{\n    msg.statusCode = 404;\n    return [msg, null];\n}\n",
+    "outputs": 2,
+    "noerr": 0,
+    "x": 710,
+    "y": 160,
+    "wires": [
+        ["d4cbc9ae.863b18"],
+        []
+    ]
+}, {
+    "id": "91f27be3.4e0018",
+    "type": "function",
+    "z": "ffd362fc.2279d",
+    "name": "",
+    "func": "action = msg.payload.actionType;\n\nif(flow.error_exists){\n    msg.statusCode = 400;\n}\nelse if(action == \"DEVICE\"){\n    global.set(\"device_id\", msg.payload.id);\n    msg.statusCode = 200;\n}\nelse if (action == \"PROFILE\"){\n    global.set(\"profile_id\", msg.payload.id);\n    msg.statusCode = 200;\n}\n\n\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 490,
+    "y": 300,
+    "wires": [
+        ["1eb7deb6.8921d1"]
+    ]
+}, {
+    "id": "f340ab43.f732a8",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_organization",
+    "func": "let lora_registration = global.get(\"lora_regisration\") || 0;\nif (lora_registration === true){\n    return null;\n}\n\nlet create_organisation = {\n  \"organization\": {\n    \"canHaveGateways\": true,\n    \"displayName\": \"default\",\n    \"id\": \"1\",\n    \"name\": \"default_organisation\"\n  }\n}\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/organizations\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nmsg.payload = create_organisation;\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 140,
+    "y": 240,
+    "wires": [
+        ["96b25572.fc1928", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "d7ab056a.5c1e48",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "set_upload_profile",
+    "func": "// msg.headers = {\n//     \"content-type\" : 'multipart/form-data'\n//     };\n// let databuffer = msg.payload;\n// let file = flow.get(\"device_profile_filename\");\nmsg.url = flow.get(\"core-metadata_url\") + \"deviceprofile/upload\";\n\n// msg.payload = {\n//     \"KEY\": {\n//         \"value\": databuffer,\n//         \"options\": {\n//             \"filename\": file\n//         }\n//     }\n// }\n\n\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 530,
+    "y": 620,
+    "wires": [
+        ["80c23241.4951f"]
+    ]
+}, {
+    "id": "f9c85bba.4e0748",
+    "type": "change",
+    "z": "1bf1e262.514f2e",
+    "name": "create_device_service",
+    "rules": [{
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "register_device_service",
+        "tot": "flow"
+    }, {
+        "t": "set",
+        "p": "url",
+        "pt": "msg",
+        "to": "$join(\t    [\t    $flowContext('core-metadata_url'),\"deviceservice\"\t    ]\t)\t\t",
+        "tot": "jsonata"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 1200,
+    "y": 640,
+    "wires": [
+        ["142055a1.71d1ca"]
+    ]
+}, {
+    "id": "f5057bdf.5f43f8",
+    "type": "http response",
+    "z": "ffd362fc.2279d",
+    "name": "returns the DS’s version string; indicates that the service is available",
+    "statusCode": "200",
+    "headers": {
+        "content-type": "application/json"
+    },
+    "x": 950,
+    "y": 80,
+    "wires": []
+}, {
+    "id": "c72124a1.519ad8",
+    "type": "change",
+    "z": "ffd362fc.2279d",
+    "name": "Version String",
+    "rules": [{
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "nodered-device-service_v0.1",
+        "tot": "str"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 500,
+    "y": 80,
+    "wires": [
+        ["f5057bdf.5f43f8"]
+    ]
+}, {
+    "id": "bc588f1d.3d39f",
+    "type": "http in",
+    "z": "ffd362fc.2279d",
+    "name": "EdgeX-metadata PUT",
+    "url": "/callback",
+    "method": "put",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 200,
+    "y": 360,
+    "wires": [
+        ["91f27be3.4e0018"]
+    ]
+}, {
+    "id": "fac1db03.75d878",
+    "type": "change",
+    "z": "1bf1e262.514f2e",
+    "name": "service_addressable",
+    "rules": [{
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "device_service_addressable",
+        "tot": "flow"
+    }, {
+        "t": "set",
+        "p": "url",
+        "pt": "msg",
+        "to": "$join(\t    [\t    $flowContext('core-metadata_url'),\"addressable\"\t    ]\t)\t",
+        "tot": "jsonata"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 200,
+    "y": 440,
+    "wires": [
+        ["c63f5301.86098"]
+    ]
+}, {
+    "id": "c63f5301.86098",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Create Addressable",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 570,
+    "y": 440,
+    "wires": [
+        ["d0f8d807.5850e8"]
+    ]
+}, {
+    "id": "15534654.464cea",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "set_device_service_id",
+    "func": "if (msg.payload.statusCode == 200){\n    global.set(\"device_service_id\", msg.payload);\n    \n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 420,
+    "y": 720,
+    "wires": [
+        ["eceaee03.52335"]
+    ]
+}, {
+    "id": "d0f8d807.5850e8",
+    "type": "change",
+    "z": "1bf1e262.514f2e",
+    "name": "value_descriptor",
+    "rules": [{
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "value_descriptor",
+        "tot": "flow"
+    }, {
+        "t": "set",
+        "p": "url",
+        "pt": "msg",
+        "to": "$join(\t   [\t       $globalContext('core-data_url'),\t       \"valuedescriptor\"\t    \t   ]\t\t)\t",
+        "tot": "jsonata"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 820,
+    "y": 440,
+    "wires": [
+        ["d5ab7e20.2b59a"]
+    ]
+}, {
+    "id": "d5ab7e20.2b59a",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Create Value Descriptor",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1070,
+    "y": 440,
+    "wires": [
+        ["f171c3e8.535ce"]
+    ]
+}, {
+    "id": "f171c3e8.535ce",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "set_device_id, filename",
+    "func": "msg.filename = \"/data/\"+flow.get(\"device_service_profile_filename\");\nnode.log(msg.filename);\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1330,
+    "y": 440,
+    "wires": [
+        ["ec070002.9445e"]
+    ]
+}, {
+    "id": "1c04d472.a0f2fc",
+    "type": "http request",
+    "z": "1bf1e262.514f2e",
+    "name": "Edgex-provision_device",
+    "method": "POST",
+    "ret": "txt",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 890,
+    "y": 720,
+    "wires": [
+        ["36c0d4c3.a9aa6c"]
+    ]
+}, {
+    "id": "eceaee03.52335",
+    "type": "change",
+    "z": "1bf1e262.514f2e",
+    "name": "provision_device",
+    "rules": [{
+        "t": "set",
+        "p": "payload",
+        "pt": "msg",
+        "to": "provision_device",
+        "tot": "flow"
+    }, {
+        "t": "set",
+        "p": "url",
+        "pt": "msg",
+        "to": "$join(\t    [\t    $flowContext('core-metadata_url'),\"device\"\t    ]\t)\t\t",
+        "tot": "jsonata"
+    }],
+    "action": "",
+    "property": "",
+    "from": "",
+    "to": "",
+    "reg": false,
+    "x": 650,
+    "y": 720,
+    "wires": [
+        ["1c04d472.a0f2fc"]
+    ]
+}, {
+    "id": "bb5a2497.ad7328",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "Create BODY messages",
+    "func": "// Create all the body messages for the edgex post requests\nlet edgex_registration = global.get(\"edgex_registration\") || false;\nif (edgex_registration === true){\n    return [null, msg];\n}\n\nglobal.set(\"core-data_url\",\"http://edgex-core-data:48080/api/v1/\" );\nflow.set(\"core-metadata_url\",\"http://edgex-core-metadata:48081/api/v1/\" );\nflow.set(\"registry_url\", \"http://edgex-core-consul:8500/v1/agent/service/register\" );\n\n\nlet device_service_addressable = {\n    \"name\": \"id:459543-lora-device_service\",\n    \"protocol\": \"HTTP\",\n    \"address\": \"nodered-device-service\", // container-name\n    \"port\": 1880,\n    \"path\": \"/\",\n    \"publisher\": \"id:584234\",\n    \"user\": \"none\",\n    \"password\": \"none\",\n    \"topic\": \"none\"\n};\n\nlet value_descriptor = {\n    \"name\": \"lora-device-data\",\n    \"description\": \"general info from the device\",\n    \"min\": \"0\",\n    \"max\": \"100\",\n    \"type\": \"J\",\n    \"uomLabel\": \"general\",\n    \"defaultValue\": \"0\",\n    \"formatting\": \"%s\",\n    \"labels\": [\n        \"general_info\"\n    ]\n};\n\nlet register_device_service = {\n    \"name\": \"id:459543-lora-device_service\",\n    \"description\": \"service requested by id:584234, validated by contract id:324325\",\n    \"labels\": [\"lora\", \"insurance_contract\"],\n    \"adminState\": \"unlocked\",\n    \"operatingState\": \"enabled\",\n    \"addressable\": {\n        \"name\": \"id:459543-lora-device_service\"\n    }\n    \n};\nlet device_name = \"id:459543-lora_device\"\n\nlet provision_device = {\n    \"name\": device_name,\n    \"description\": \"device used by \\\"id:459543-lora-device_service\\\"\",\n    \"adminState\": \"unlocked\",\n    \"operatingState\": \"enabled\",\n    \"protocols\": {\n        \"default\": {\n            \"host\": \"nodered-device-service\",\n            \"port\": \"1880\",\n            \"unitID\": \"1\"\n        }\n    },\n    \"labels\": [\"lora\"],\n    \"location\": \"\",\n    \"service\": {\n        \"name\": \"id:459543-lora-device_service\"\n    },\n    \"profile\": {\n        \"name\": \"id459543-lora-device_service_profile2\"\n    }\n}\nflow.set(\"device_service_profile_filename\",\"generic_lora_device_profile.yaml\")\nflow.set(\"device_service_addressable\", device_service_addressable);\nflow.set(\"value_descriptor\",value_descriptor);\nflow.set(\"register_device_service\", register_device_service);\nflow.set(\"provision_device\", provision_device);\nglobal.set(\"device_name\",device_name);\n\nreturn [msg, null];\n",
+    "outputs": 2,
+    "noerr": 0,
+    "x": 330,
+    "y": 360,
+    "wires": [
+        ["fac1db03.75d878"],
+        ["2865ce8a.192f52"]
+    ]
+}, {
+    "id": "36c0d4c3.a9aa6c",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "edgex_registration_complete",
+    "func": "if (msg.statusCode == 200){\n    global.set(\"device_id\", msg.payload);\n    global.set(\"edgex_registration\", true);\n    \n}\n\nmsg.device_id = global.get(\"device_id\");\nmsg.edgex_reg = global.get(\"edgex_registration\");\n\n\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1180,
+    "y": 720,
+    "wires": [
+        ["63a8cf2b.c5c43", "eac72fd0.605b4"]
+    ]
+}, {
+    "id": "a38eda5c.854ab8",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_application",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"gateway_id\",msg.payload.id);\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet org_id = flow.get(\"organisation_id\");\nlet serv_id = flow.get(\"service_profile_id\");\n\nlet create_application = {\n  \"application\": {\n    \"description\": \"generic_lora_application\",\n    \"id\": \"1\",\n    \"name\": \"default_application\",\n    \"organizationID\": org_id,\n    \"serviceProfileID\": serv_id\n  }\n}\nmsg.payload = create_application;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/applications\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 80,
+    "y": 420,
+    "wires": [
+        ["13db4f3b.be7941"]
+    ]
+}, {
+    "id": "ad848271.e8084",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_network_server",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"organisation_id\", msg.payload.id);\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    msg.error = true;\n    return null;\n}\n\nlet ip = env.get(\"LORANK_IP\").toString() + \":8000\";\nlet create_network_server = {\n  \"networkServer\": {\n    \"gatewayDiscoveryDR\": 0,\n    \"gatewayDiscoveryEnabled\": true,\n    \"gatewayDiscoveryInterval\": 60,\n    \"gatewayDiscoveryTXFrequency\": 0,\n    \"name\": \"sibling_network_server\",\n    \"server\": ip\n  }\n};\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/network-servers\";\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n};\n\nmsg.payload = create_network_server;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 770,
+    "y": 240,
+    "wires": [
+        ["9447c473.6801a8", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "827fa519.697488",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_http_integration",
+    "func": "if (msg.statusCode == 200){\n    let activation = null;\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet app_id = flow.get(\"application_id\");\nbase = \"nodered-device-service\";\nlet create_http_integration = {\n  \"integration\": {\n    \"applicationID\": app_id,\n    \"headers\": [],\n    \"uplinkDataURL\": \"http://\" + base + \":1880/lora-uplink\"\n  }\n}\nmsg.payload = create_http_integration;\n\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/applications/\" + app_id + \"/integrations/http\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 753,
+    "y": 509,
+    "wires": [
+        ["f858441b.b01ff8"]
+    ]
+}, {
+    "id": "96b25572.fc1928",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_organisation",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 439,
+    "y": 241,
+    "wires": [
+        ["ad848271.e8084", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "9c9ee511.099f88",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_device-profile",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 850,
+    "y": 420,
+    "wires": [
+        ["153294dc.2ae22b"]
+    ]
+}, {
+    "id": "e40c47dc.5dd8c8",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_device",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 1350,
+    "y": 420,
+    "wires": [
+        ["7f145f31.73181", "b9bdd1cf.cbe17"]
+    ]
+}, {
+    "id": "153294dc.2ae22b",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_device",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"device_profile_id\",msg.payload.id);\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\n\nlet app_id = flow.get(\"application_id\");\nlet dev_prof_id = flow.get(\"device_profile_id\");\nlet create_device = {\n  \"device\": {\n    \"applicationID\": app_id,\n    \"description\": \"default device of contract buyer\",\n    \"devEUI\": \"0102030405060708\",\n    \"deviceProfileID\": dev_prof_id,\n    \"name\": \"default_device\",\n    \"referenceAltitude\": 0,\n    \"skipFCntCheck\": true,\n    \"tags\": {},\n    \"variables\": {}\n  }\n}\nmsg.payload = create_device;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/devices\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1130,
+    "y": 420,
+    "wires": [
+        ["e40c47dc.5dd8c8"]
+    ]
+}, {
+    "id": "a56466a9.1035f8",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_gateway",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"gateway_profile_id\",msg.payload.id)\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet net_id = flow.get(\"network_server_id\");\nlet org_id = flow.get(\"organisation_id\");\nlet gate_prof_id = flow.get(\"gateway_profile_id\");\nlet gate_id = env.get(\"GATEWAY_ID\");\n\nlet create_gateway = {\n  \"gateway\": {\n    \"boards\":  [],\n    \"description\": \"sibling gateway\",\n    \"discoveryEnabled\": false,\n    \"gatewayProfileID\": gate_prof_id,\n    \"id\": gate_id,\n    \"location\": {\n      \"accuracy\": 0,\n      \"altitude\": 0,\n      \"latitude\": 0,\n      \"longitude\": 0,\n      \"source\": \"UNKNOWN\"\n    },\n    \"name\": \"default_gateway\",\n    \"networkServerID\": net_id,\n    \"organizationID\": org_id\n  }\n}\nmsg.payload = create_gateway;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/gateways\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1030,
+    "y": 320,
+    "wires": [
+        ["61cbc697.7c11d8"]
+    ]
+}, {
+    "id": "7437bd89.4df834",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_gateway_profile",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"service_profile_id\",msg.payload.id);\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet net_id = flow.get(\"network_server_id\");\nlet create_gateway_profile = {\n  \"gatewayProfile\": {\n    \"channels\": [1,2,3,4,5,6,7,8,9,10,11,12,13],\n    \"extraChannels\": [\n      {\n        \"bandwidth\": 0,\n        \"bitrate\": 0,\n        \"frequency\": 0,\n        \"modulation\": \"LORA\",\n        \"spreadingFactors\": [\n          0\n        ]\n      }\n    ],\n    \"id\": \"1\",\n    \"name\": \"default_gateway_profile\",\n    \"networkServerID\": net_id\n  }\n}\nmsg.payload = create_gateway_profile;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/gateway-profiles\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 460,
+    "y": 320,
+    "wires": [
+        ["cd220aa9.966798"]
+    ]
+}, {
+    "id": "31b73bc2.975964",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_service_profile",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"network_server_id\", msg.payload.id);\n}\n\nlet org_id = flow.get(\"organisation_id\");\nlet net_id = flow.get(\"network_server_id\");\nlet create_service_profile = {\n  \"serviceProfile\": {\n    \"addGWMetaData\": true,\n    \"devStatusReqFreq\": 0,\n    \"dlBucketSize\": 0,\n    \"dlRate\": 0,\n    \"dlRatePolicy\": \"DROP\",\n    \"drMax\": 0,\n    \"drMin\": 0,\n    \"hrAllowed\": true,\n    \"id\": \"1\",\n    \"minGWDiversity\": 0,\n    \"name\": \"default_service_profile\",\n    \"networkServerID\": net_id,\n    \"nwkGeoLoc\": true,\n    \"organizationID\": org_id,\n    \"prAllowed\": true,\n    \"raAllowed\": true,\n    \"reportDevStatusBattery\": true,\n    \"reportDevStatusMargin\": true,\n    \"targetPER\": 0,\n    \"ulBucketSize\": 0,\n    \"ulRate\": 0,\n    \"ulRatePolicy\": \"DROP\"\n  }\n}\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/service-profiles\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nmsg.payload = create_service_profile;\n\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1450,
+    "y": 240,
+    "wires": [
+        ["bee2f944.146398"]
+    ]
+}, {
+    "id": "cbb8bd1c.a47a7",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_device_profile",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"application_id\",msg.payload.id);\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet net_server_id = flow.get(\"network_server_id\");\nlet org_id = flow.get(\"organisation_id\");\nlet create_device_profile = {\n  \"deviceProfile\": {\n    \"classBTimeout\": 0,\n    \"classCTimeout\": 0,\n    \"factoryPresetFreqs\": [\n      0\n    ],\n    \"id\": \"1\",\n    \"macVersion\": \"1.0.2\",\n    \"maxDutyCycle\": 0,\n    \"maxEIRP\": 0,\n    \"name\": \"defualt_lora_device\",\n    \"networkServerID\": net_server_id,\n    \"organizationID\": org_id,\n    \"regParamsRevision\": \"A\",\n    \"pingSlotDR\": 0,\n    \"pingSlotFreq\": 0,\n    \"pingSlotPeriod\": 0,\n    \"rxDROffset1\": 0,\n    \"rxDataRate2\": 0,\n    \"rxDelay1\": 0,\n    \"rxFreq2\": 0,\n    \"supports32BitFCnt\": true,\n    \"supportsClassB\": false,\n    \"supportsClassC\": false,\n    \"supportsJoin\": false\n  }\n}\nmsg.payload = create_device_profile;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/device-profiles\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 579,
+    "y": 418,
+    "wires": [
+        ["9c9ee511.099f88"]
+    ]
+}, {
+    "id": "2cd587ae.8822f8",
+    "type": "http request",
+    "z": "d48a6a61.7ca768",
+    "name": "lora-app-server_create_device",
+    "method": "POST",
+    "ret": "obj",
+    "paytoqs": false,
+    "url": "",
+    "tls": "",
+    "proxy": "",
+    "authType": "",
+    "x": 453,
+    "y": 508,
+    "wires": [
+        ["827fa519.697488"]
+    ]
+}, {
+    "id": "7f145f31.73181",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "set_device_activation",
+    "func": "if (msg.statusCode == 200){\n    flow.set(\"lora_device_id\");\n}\nelse if (msg.statusCode != 409) {\n    node.error(\"Request from node: \" + node.name + \" failed\");\n    return null;\n}\nlet netskey = env.get(\"NETSKEY\");\nlet appskey = env.get(\"APPSKEY\");\nlet devaddr = env.get(\"DEVADDR\");\nlet device_activation = {\n  \"deviceActivation\": {\n    \"aFCntDown\": 0,\n    \"appSKey\": appskey,\n    \"devAddr\": devaddr,\n    \"devEUI\": \"0102030405060708\",\n    \"fCntUp\": 0,\n    \"nFCntDown\": 0,\n\"nwkSEncKey\":netskey,\n\"sNwkSIntKey\": netskey,\n\"fNwkSIntKey\":netskey\n  }\n}\nmsg.payload = device_activation;\nlet token = env.get(\"JWT_TOKEN\");\nmsg.url = env.get(\"URL\") + \"/api/devices/0102030405060708/activate\"\nmsg.headers = {\n    Authorization: \"Bearer \" + token\n}\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 105,
+    "y": 507,
+    "wires": [
+        ["2cd587ae.8822f8"]
+    ]
+}, {
+    "id": "62418863.9eb078",
+    "type": "function",
+    "z": "1bf1e262.514f2e",
+    "name": "set_consul_registry",
+    "func": "let registry = {\n  \"ID\": \"lora_device_service\",\n  \"Name\": \"lora_device_service\",\n  \"Tags\": [\n    \"primary\",\n    \"v1\"\n  ],\n  \"Address\": \"nodered-device-service\",\n  \"Port\": 1880,\n  \"Meta\": {\n    \"version\": \"0.1\"\n  },\n  \"EnableTagOverride\": false,\n  \"Check\": {\n    \"DeregisterCriticalServiceAfter\": \"90m\",\n    \"HTTP\": \"http://127.0.0.1:1880/ping\",\n    \"Interval\": \"30s\",\n  },\n  \"Weights\": {\n    \"Passing\": 10,\n    \"Warning\": 1\n  }\n}\nmsg.payload = registry;\nmsg.url = flow.get(\"registry_url\");\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1010,
+    "y": 560,
+    "wires": [
+        ["6d8562b2.90e7ac"]
+    ]
+}, {
+    "id": "c4853fb3.dd476",
+    "type": "function",
+    "z": "d48a6a61.7ca768",
+    "name": "lora_registration_complete",
+    "func": "if (msg.statusCode != 200){\n    node.error(\"Request from node: \" + node.name + \"failed\");\n    return null;\n}\nglobal.set(\"lora_regisration\", true);\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "x": 1460,
+    "y": 500,
+    "wires": [
+        []
+    ]
+}, {
+    "id": "cbebfcda.9244b",
+    "type": "yaml",
+    "z": "1bf1e262.514f2e",
+    "property": "payload",
+    "name": "",
+    "x": 417.5,
+    "y": 560,
+    "wires": [
+        ["d7ab056a.5c1e48"]
+    ]
+}, {
+    "id": "3dd7fe66.349d12",
+    "type": "http response",
+    "z": "ffd362fc.2279d",
+    "name": "",
+    "statusCode": "",
+    "headers": {},
+    "x": 1010,
+    "y": 420,
+    "wires": []
+}, {
+    "id": "63a8cf2b.c5c43",
+    "type": "delay",
+    "z": "1bf1e262.514f2e",
+    "name": "",
+    "pauseType": "delay",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "1",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": false,
+    "x": 1360,
+    "y": 800,
+    "wires": [
+        ["2865ce8a.192f52"]
+    ]
+}, {
+    "id": "b9bdd1cf.cbe17",
+    "type": "debug",
+    "z": "d48a6a61.7ca768",
+    "name": "",
+    "active": true,
+    "tosidebar": false,
+    "console": true,
+    "tostatus": true,
+    "complete": "payload",
+    "targetType": "msg",
+    "x": 1040,
+    "y": 100,
+    "wires": []
+}, {
+    "id": "b86700c5.2c7f",
+    "type": "http response",
+    "z": "1bf1e262.514f2e",
+    "name": "",
+    "statusCode": "200",
+    "headers": {},
+    "x": 430,
+    "y": 240,
+    "wires": []
+}, {
+    "id": "ba85bf77.0457b",
+    "type": "http in",
+    "z": "1bf1e262.514f2e",
+    "name": "",
+    "url": "/start",
+    "method": "post",
+    "upload": false,
+    "swaggerDoc": "",
+    "x": 110,
+    "y": 360,
+    "wires": [
+        ["bb5a2497.ad7328", "b86700c5.2c7f"]
+    ]
+}, {
+    "id": "eac72fd0.605b4",
+    "type": "debug",
+    "z": "1bf1e262.514f2e",
+    "name": "",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "full",
+    "x": 1500,
+    "y": 640,
+    "wires": []
+}]
