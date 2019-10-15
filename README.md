@@ -1,4 +1,4 @@
-Master repository for my Thesis Project for the Diploma  from the [Department of Electrical Engineering & Computer Technology](http://www.ece.upatras.gr/en/), University of Patras, Greece.
+Master repository for my [Thesis](https://www.researchgate.net/publication/336564357_An_IoT_Edge-as-a-service_Eaas_Distributed_Architecture_Reference_Implementation) Project for the Diploma from the [Department of Electrical Engineering & Computer Technology](http://www.ece.upatras.gr/en/), University of Patras, Greece.
 
 It is shared under the Apache license to serve as boilerplate for future Thesis manuscripts as also to further the research in the relevant areas.
 
