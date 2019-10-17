@@ -1,4 +1,4 @@
-## This is a work in progress ##.
+## This is a work in progress 
 
 Please note that the Implementation Chapter can serve as a walkthrough for configuring and running the implementation on the appropriate hardware.
 
