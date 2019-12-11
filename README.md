@@ -4,6 +4,8 @@ It is shared under the [Apache license version 2.0](https://opensource.org/licen
 
 The **Thesis Manuscript** can be found in pdf at [ResearchGate](https://www.researchgate.net/publication/336564357_An_IoT_Edge-as-a-service_Eaas_Distributed_Architecture_Reference_Implementation).
 
+The **Thesis Presentation** can be find on [Google Drive](https://drive.google.com/file/d/1iOvrei_ovW507EpoqWsOwiSWtHMNTX6E/view?usp=sharing)
+
 The repository is divided into 2 main directories:
 
  -  **Thesis:** The latex source directory for the thesis manuscript, it contains all the relevant images, texts and every file needed to compile the thesis in [Overleaf](https://www.overleaf.com). The latex template was forked from [Nikos Tsiknakis repository](https://github.com/tsikup/ece-upatras-thesis-template) whom I wholeheartly thank for his assistance during my latex virgin voyage. *XeLaTEX* was used for compilation.
