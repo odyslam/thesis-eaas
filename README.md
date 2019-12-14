@@ -4,7 +4,7 @@ It is shared under the [Apache license version 2.0](https://opensource.org/licen
 
 The **Thesis Manuscript** can be found in pdf at [ResearchGate](https://www.researchgate.net/publication/336564357_An_IoT_Edge-as-a-service_Eaas_Distributed_Architecture_Reference_Implementation).
 
-The **Thesis Presentation** can be find on [Google Drive](https://drive.google.com/file/d/1iOvrei_ovW507EpoqWsOwiSWtHMNTX6E/view?usp=sharing)
+The **Thesis Presentation** can be found on [Google Drive](https://drive.google.com/file/d/1iOvrei_ovW507EpoqWsOwiSWtHMNTX6E/view?usp=sharing)
 
 The repository is divided into 2 main directories:
 
